@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta name="theme-color" content="#050505"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="SIX4BEAST"/>
+  <title>SIX4BEAST OS PWA</title>
+  <link rel="manifest" href="manifest.webmanifest"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">SIX4BEAST OS PWA v1.0</p>
+      <h1>Mission Control</h1>
+    </div>
+    <button id="installBtn" hidden>Install</button>
+  </header>
+
+  <main>
+    <section class="hero card">
+      <div>
+        <h2>AM Builds the Athlete. PM Builds the Beast.</h2>
+        <p>Built for HP laptop development, iPhone Home Screen use, and future Apple Watch conversion.</p>
+      </div>
+      <div class="score">
+        <span>Hybrid Score</span>
+        <strong id="hybridScore">72</strong>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card kpi"><span>Weight</span><strong>363.2</strong><small>Goal 260–265</small></div>
+      <div class="card kpi"><span>Body Fat</span><strong>36.8%</strong><small>Goal 10–12%</small></div>
+      <div class="card kpi"><span>SMM</span><strong>131.6</strong><small>Preserve</small></div>
+      <div class="card kpi"><span>Mode</span><strong>Work</strong><small>7–5:45</small></div>
+    </section>
+
+    <nav class="tabs">
+      <button onclick="showTab('today')" class="active">Today</button>
+      <button onclick="showTab('log')">Log</button>
+      <button onclick="showTab('pullup')">Pull-up</button>
+      <button onclick="showTab('nutrition')">Meals</button>
+      <button onclick="showTab('steps')">Steps</button>
+    </nav>
+
+    <section id="today" class="tab active">
+      <div class="card">
+        <div class="section-head">
+          <h2>Today's Workout</h2>
+          <select id="sessionSelect" onchange="renderWorkout()">
+            <option value="am">AM Core + Movement</option>
+            <option value="pm">PM Beast Session</option>
+          </select>
+        </div>
+        <div id="workout"></div>
+        <div class="workout-actions">
+          <button onclick="startWorkout()">Start Workout</button>
+          <button onclick="completeWorkout()">Complete Workout</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Live Set Tracker</h2>
+        <div class="tracker">
+          <button onclick="decSet()">−</button>
+          <strong id="setCount">0</strong>
+          <button onclick="incSet()">+</button>
+        </div>
+        <div class="form-grid">
+          <input id="rpe" inputmode="decimal" placeholder="RPE"/>
+          <input id="formScore" inputmode="numeric" placeholder="Form 1-5"/>
+          <button onclick="saveSet()">Save Set</button>
+        </div>
+        <div class="timer">
+          <span id="timerDisplay">02:00</span>
+          <button onclick="startRest()">Start Rest</button>
+          <button onclick="resetRest()">Reset</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="log" class="tab">
+      <div class="card">
+        <h2>Workout Log</h2>
+        <div class="form-grid">
+          <input id="logExercise" placeholder="Exercise"/>
+          <input id="logLoad" inputmode="decimal" placeholder="Load"/>
+          <input id="logReps" inputmode="numeric" placeholder="Reps"/>
+          <input id="logNotes" placeholder="Notes"/>
+          <button onclick="addLog()">Add</button>
+          <button class="secondary" onclick="exportCSV()">Export CSV</button>
+        </div>
+        <ul id="logList"></ul>
+      </div>
+    </section>
+
+    <section id="pullup" class="tab">
+      <div class="card">
+        <h2>Pull-up Academy</h2>
+        <p class="muted">Bare bones rookie progression. Earn each level.</p>
+        <div id="pullupLevels"></div>
+      </div>
+    </section>
+
+    <section id="nutrition" class="tab">
+      <div class="card">
+        <h2>Meal / Macro Log</h2>
+        <div class="form-grid">
+          <input id="mealName" placeholder="Meal"/>
+          <input id="protein" inputmode="numeric" placeholder="Protein"/>
+          <input id="carbs" inputmode="numeric" placeholder="Carbs"/>
+          <input id="fat" inputmode="numeric" placeholder="Fat"/>
+          <button onclick="addMeal()">Add Meal</button>
+        </div>
+        <div id="macroBars"></div>
+        <ul id="mealList"></ul>
+      </div>
+      <div class="card">
+        <h2>Weekly Grocery List</h2>
+        <div id="grocery"></div>
+      </div>
+    </section>
+
+    <section id="steps" class="tab">
+      <div class="card">
+        <h2>Build Steps on HP → iPhone</h2>
+        <ol>
+          <li>Download and unzip this folder on your HP laptop.</li>
+          <li>Install VS Code.</li>
+          <li>Open this folder in VS Code.</li>
+          <li>Install the VS Code extension called <b>Live Server</b>.</li>
+          <li>Right-click <b>index.html</b> and choose <b>Open with Live Server</b>.</li>
+          <li>Test the app on your HP browser.</li>
+          <li>To use on iPhone, upload the folder to GitHub Pages, Netlify, or Vercel.</li>
+          <li>Open the live link in iPhone Safari.</li>
+          <li>Tap Share → Add to Home Screen.</li>
+          <li>Use Apple Watch Workout app separately for heart rate until native Watch build later.</li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
