@@ -1,35 +1,30 @@
-# SIX4BEAST OS PWA v1.0
+# SIX4BEAST Sprints 3 and 4
 
-This is the HP-to-iPhone build.
+## Sprint 3 — Training Engine
+Included:
+- Interactive workout flow
+- AM and PM sessions
+- Exercise-by-exercise coach mode
+- Set tracker
+- Rest timer
+- RPE entry
+- Form score
+- Workout log
 
-## What this is
-A Progressive Web App you can build/edit from an HP laptop and install on your iPhone Home Screen.
+## Sprint 4 — Athlete Analytics
+Included:
+- Weight trend chart
+- Strength/load trend chart
+- Pull-up Academy progress
+- Weekly readiness score
+- Coach recommendation
+- Data export
 
-## How to run on HP
-1. Unzip this folder.
-2. Install VS Code.
-3. Open the folder in VS Code.
-4. Install the VS Code extension: Live Server.
-5. Right-click `index.html`.
-6. Click `Open with Live Server`.
+## How to deploy
+Upload these files to the same GitHub Pages repository:
+- index.html
+- style.css
+- app.js
+- README.md
 
-## How to use on iPhone
-The PWA needs to be hosted online first.
-
-Easy hosting options:
-- GitHub Pages
-- Netlify
-- Vercel
-
-After hosted:
-1. Open the live website link in iPhone Safari.
-2. Tap Share.
-3. Tap Add to Home Screen.
-4. Open SIX4BEAST like an app.
-
-## Apple Watch for now
-Use the Apple Watch Workout app separately to track heart rate/calories.
-Use this PWA on iPhone to run workouts, sets, RPE, form score, meals, and logs.
-
-## Later
-When you get access to a Mac or cloud Mac, this web app logic can be converted into the native SwiftUI iPhone + Watch app.
+Commit changes and refresh your GitHub Pages URL.

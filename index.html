@@ -2,148 +2,122 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-  <meta name="theme-color" content="#050505"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-  <meta name="apple-mobile-web-app-title" content="SIX4BEAST"/>
-  <title>SIX4BEAST OS PWA</title>
-  <link rel="manifest" href="manifest.webmanifest"/>
-  <link rel="stylesheet" href="styles.css"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SIX4BEAST OS — Sprints 3 & 4</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <header class="topbar">
+<header class="top">
+  <div>
+    <p>SIX4BEAST OS</p>
+    <h1>Training Engine + Athlete Analytics</h1>
+  </div>
+  <button onclick="exportData()">Export Data</button>
+</header>
+
+<main>
+  <section class="hero">
     <div>
-      <p class="eyebrow">SIX4BEAST OS PWA v1.0</p>
-      <h1>Mission Control</h1>
+      <h2>Today's Mission</h2>
+      <p>AM builds the athlete. PM builds the beast.</p>
     </div>
-    <button id="installBtn" hidden>Install</button>
-  </header>
+    <div class="score">
+      <span>Hybrid Score</span>
+      <strong id="hybridScore">74</strong>
+    </div>
+  </section>
 
-  <main>
-    <section class="hero card">
-      <div>
-        <h2>AM Builds the Athlete. PM Builds the Beast.</h2>
-        <p>Built for HP laptop development, iPhone Home Screen use, and future Apple Watch conversion.</p>
+  <nav class="tabs">
+    <button class="active" onclick="showTab('engine')">Sprint 3</button>
+    <button onclick="showTab('analytics')">Sprint 4</button>
+    <button onclick="showTab('history')">History</button>
+  </nav>
+
+  <section id="engine" class="tab active">
+    <div class="card">
+      <div class="head">
+        <h2>Training Engine</h2>
+        <select id="sessionSelect" onchange="loadWorkout()">
+          <option value="am">AM Core + Movement</option>
+          <option value="pm">PM Beast Session</option>
+        </select>
       </div>
-      <div class="score">
-        <span>Hybrid Score</span>
-        <strong id="hybridScore">72</strong>
+
+      <div id="workoutHeader"></div>
+      <div id="exerciseBox"></div>
+
+      <div class="controls">
+        <button onclick="prevExercise()">Previous</button>
+        <button onclick="completeSet()">Complete Set</button>
+        <button onclick="nextExercise()">Next</button>
       </div>
-    </section>
 
-    <section class="grid">
-      <div class="card kpi"><span>Weight</span><strong>363.2</strong><small>Goal 260–265</small></div>
-      <div class="card kpi"><span>Body Fat</span><strong>36.8%</strong><small>Goal 10–12%</small></div>
-      <div class="card kpi"><span>SMM</span><strong>131.6</strong><small>Preserve</small></div>
-      <div class="card kpi"><span>Mode</span><strong>Work</strong><small>7–5:45</small></div>
-    </section>
+      <div class="tracker">
+        <div><span>Exercise</span><strong id="exerciseProgress">1/1</strong></div>
+        <div><span>Sets Done</span><strong id="setsDone">0</strong></div>
+        <div><span>Rest Timer</span><strong id="timer">02:00</strong></div>
+      </div>
 
-    <nav class="tabs">
-      <button onclick="showTab('today')" class="active">Today</button>
-      <button onclick="showTab('log')">Log</button>
-      <button onclick="showTab('pullup')">Pull-up</button>
-      <button onclick="showTab('nutrition')">Meals</button>
-      <button onclick="showTab('steps')">Steps</button>
-    </nav>
+      <div class="controls">
+        <button onclick="startRest()">Start Rest</button>
+        <button onclick="resetRest()">Reset Rest</button>
+      </div>
 
-    <section id="today" class="tab active">
+      <div class="form">
+        <input id="load" placeholder="Load"/>
+        <input id="reps" placeholder="Reps"/>
+        <input id="rpe" placeholder="RPE"/>
+        <input id="formScore" placeholder="Form 1-5"/>
+        <input id="notes" placeholder="Notes"/>
+        <button onclick="saveExerciseLog()">Save Log</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="analytics" class="tab">
+    <div class="grid">
       <div class="card">
-        <div class="section-head">
-          <h2>Today's Workout</h2>
-          <select id="sessionSelect" onchange="renderWorkout()">
-            <option value="am">AM Core + Movement</option>
-            <option value="pm">PM Beast Session</option>
-          </select>
-        </div>
-        <div id="workout"></div>
-        <div class="workout-actions">
-          <button onclick="startWorkout()">Start Workout</button>
-          <button onclick="completeWorkout()">Complete Workout</button>
+        <h2>Weight Trend</h2>
+        <canvas id="weightChart" width="520" height="260"></canvas>
+        <div class="form">
+          <input id="weightInput" placeholder="Weight"/>
+          <button onclick="addWeight()">Add Weight</button>
         </div>
       </div>
 
       <div class="card">
-        <h2>Live Set Tracker</h2>
-        <div class="tracker">
-          <button onclick="decSet()">−</button>
-          <strong id="setCount">0</strong>
-          <button onclick="incSet()">+</button>
-        </div>
-        <div class="form-grid">
-          <input id="rpe" inputmode="decimal" placeholder="RPE"/>
-          <input id="formScore" inputmode="numeric" placeholder="Form 1-5"/>
-          <button onclick="saveSet()">Save Set</button>
-        </div>
-        <div class="timer">
-          <span id="timerDisplay">02:00</span>
-          <button onclick="startRest()">Start Rest</button>
-          <button onclick="resetRest()">Reset</button>
-        </div>
+        <h2>Strength Trend</h2>
+        <canvas id="strengthChart" width="520" height="260"></canvas>
       </div>
-    </section>
 
-    <section id="log" class="tab">
       <div class="card">
-        <h2>Workout Log</h2>
-        <div class="form-grid">
-          <input id="logExercise" placeholder="Exercise"/>
-          <input id="logLoad" inputmode="decimal" placeholder="Load"/>
-          <input id="logReps" inputmode="numeric" placeholder="Reps"/>
-          <input id="logNotes" placeholder="Notes"/>
-          <button onclick="addLog()">Add</button>
-          <button class="secondary" onclick="exportCSV()">Export CSV</button>
+        <h2>Pull-up Academy Progress</h2>
+        <div id="pullupProgress"></div>
+        <button onclick="advancePullup()">Advance Pull-up Level</button>
+      </div>
+
+      <div class="card">
+        <h2>Weekly Readiness</h2>
+        <div class="readiness">
+          <label>Sleep <input id="sleep" type="range" min="1" max="5" value="3" oninput="calcReadiness()"></label>
+          <label>Energy <input id="energy" type="range" min="1" max="5" value="3" oninput="calcReadiness()"></label>
+          <label>Soreness <input id="soreness" type="range" min="1" max="5" value="3" oninput="calcReadiness()"></label>
+          <label>Stress <input id="stress" type="range" min="1" max="5" value="3" oninput="calcReadiness()"></label>
         </div>
-        <ul id="logList"></ul>
+        <div class="bigscore" id="readinessScore">60%</div>
+        <p id="coachRecommendation">Yellow light — keep quality high.</p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="pullup" class="tab">
-      <div class="card">
-        <h2>Pull-up Academy</h2>
-        <p class="muted">Bare bones rookie progression. Earn each level.</p>
-        <div id="pullupLevels"></div>
-      </div>
-    </section>
+  <section id="history" class="tab">
+    <div class="card">
+      <h2>Workout History</h2>
+      <ul id="historyList"></ul>
+    </div>
+  </section>
+</main>
 
-    <section id="nutrition" class="tab">
-      <div class="card">
-        <h2>Meal / Macro Log</h2>
-        <div class="form-grid">
-          <input id="mealName" placeholder="Meal"/>
-          <input id="protein" inputmode="numeric" placeholder="Protein"/>
-          <input id="carbs" inputmode="numeric" placeholder="Carbs"/>
-          <input id="fat" inputmode="numeric" placeholder="Fat"/>
-          <button onclick="addMeal()">Add Meal</button>
-        </div>
-        <div id="macroBars"></div>
-        <ul id="mealList"></ul>
-      </div>
-      <div class="card">
-        <h2>Weekly Grocery List</h2>
-        <div id="grocery"></div>
-      </div>
-    </section>
-
-    <section id="steps" class="tab">
-      <div class="card">
-        <h2>Build Steps on HP → iPhone</h2>
-        <ol>
-          <li>Download and unzip this folder on your HP laptop.</li>
-          <li>Install VS Code.</li>
-          <li>Open this folder in VS Code.</li>
-          <li>Install the VS Code extension called <b>Live Server</b>.</li>
-          <li>Right-click <b>index.html</b> and choose <b>Open with Live Server</b>.</li>
-          <li>Test the app on your HP browser.</li>
-          <li>To use on iPhone, upload the folder to GitHub Pages, Netlify, or Vercel.</li>
-          <li>Open the live link in iPhone Safari.</li>
-          <li>Tap Share → Add to Home Screen.</li>
-          <li>Use Apple Watch Workout app separately for heart rate until native Watch build later.</li>
-        </ol>
-      </div>
-    </section>
-  </main>
-
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
