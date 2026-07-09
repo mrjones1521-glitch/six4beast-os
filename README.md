@@ -1,30 +1,30 @@
-# SIX4BEAST Sprints 3 and 4
+# SIX4BEAST OS 2.0
 
-## Sprint 3 — Training Engine
-Included:
-- Interactive workout flow
-- AM and PM sessions
+This is the first major upgrade from prototype to Performance OS.
+
+## Included
+- Mission Control dashboard
+- Training Engine 2.0
 - Exercise-by-exercise coach mode
 - Set tracker
 - Rest timer
-- RPE entry
-- Form score
-- Workout log
-
-## Sprint 4 — Athlete Analytics
-Included:
-- Weight trend chart
-- Strength/load trend chart
-- Pull-up Academy progress
-- Weekly readiness score
-- Coach recommendation
+- RPE and form score logging
+- Pull-up Academy
+- Nutrition OS with macro bars
+- Grocery list
+- Athlete Analytics
+- Weight and strength trend charts
 - Data export
+- PWA manifest and offline service worker
 
-## How to deploy
-Upload these files to the same GitHub Pages repository:
+## Deploy
+Upload these files to your GitHub Pages repo:
 - index.html
 - style.css
 - app.js
+- manifest.webmanifest
+- icon.svg
+- sw.js
 - README.md
 
-Commit changes and refresh your GitHub Pages URL.
+Commit changes and refresh your live site.

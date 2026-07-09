@@ -2,122 +2,239 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>SIX4BEAST OS — Sprints 3 & 4</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta name="theme-color" content="#050505"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="SIX4BEAST"/>
+  <title>SIX4BEAST OS 2.0</title>
+  <link rel="manifest" href="manifest.webmanifest"/>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-<header class="top">
-  <div>
-    <p>SIX4BEAST OS</p>
-    <h1>Training Engine + Athlete Analytics</h1>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">S4B</div>
+        <div>
+          <h1>SIX4BEAST</h1>
+          <p>Performance OS 2.0</p>
+        </div>
+      </div>
+      <nav>
+        <button class="nav active" data-tab="dashboard">Mission Control</button>
+        <button class="nav" data-tab="training">Training Engine</button>
+        <button class="nav" data-tab="academy">Pull-up Academy</button>
+        <button class="nav" data-tab="nutrition">Nutrition OS</button>
+        <button class="nav" data-tab="analytics">Athlete Analytics</button>
+        <button class="nav" data-tab="settings">Deploy Steps</button>
+      </nav>
+    </aside>
+
+    <main>
+      <section id="dashboard" class="tab active">
+        <div class="hero">
+          <div>
+            <p class="eyebrow">MISSION CONTROL</p>
+            <h2>AM Builds the Athlete. PM Builds the Beast.</h2>
+            <p>Your daily command center for core, movement, strength, nutrition, recovery, and the 260–265 lb hybrid athlete mission.</p>
+          </div>
+          <div class="hero-score">
+            <span>Hybrid Score</span>
+            <strong id="hybridScore">74</strong>
+            <small>Updates from logs</small>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="card metric"><span>Weight</span><strong id="currentWeight">363.2</strong><small>Goal 260–265</small></div>
+          <div class="card metric"><span>Body Fat</span><strong>36.8%</strong><small>Goal 10–12%</small></div>
+          <div class="card metric"><span>SMM</span><strong>131.6</strong><small>Preserve muscle</small></div>
+          <div class="card metric"><span>Pull-up Level</span><strong id="pullLevelDash">0</strong><small>Rookie path</small></div>
+        </div>
+
+        <div class="dashboard-grid two">
+          <div class="card">
+            <div class="card-head">
+              <h3>Today's Mission</h3>
+              <button onclick="startMission()">Start</button>
+            </div>
+            <div class="mission-card">
+              <div>
+                <span>AM</span>
+                <strong>Core + Movement</strong>
+                <p>Bracing, mobility, movement IQ.</p>
+              </div>
+              <div>
+                <span>PM</span>
+                <strong>Beast Session</strong>
+                <p>Strength, power, conditioning.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Coach AI</h3>
+            <div id="coachAI" class="coach-box"></div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid two">
+          <div class="card">
+            <h3>Readiness</h3>
+            <div class="gauge">
+              <div class="gauge-ring" id="readinessRing"><span id="readinessValue">70%</span></div>
+            </div>
+            <p id="readinessText">Yellow light — train with quality, avoid grinders.</p>
+          </div>
+
+          <div class="card">
+            <h3>Weekly Snapshot</h3>
+            <div class="snapshot">
+              <div><span>Workouts</span><strong id="workoutCount">0</strong></div>
+              <div><span>Sets</span><strong id="setTotal">0</strong></div>
+              <div><span>Meals</span><strong id="mealCount">0</strong></div>
+              <div><span>Logs</span><strong id="logCount">0</strong></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="training" class="tab">
+        <div class="top-line">
+          <div>
+            <p class="eyebrow">SPRINT 3</p>
+            <h2>Training Engine 2.0</h2>
+          </div>
+          <select id="sessionSelect" onchange="loadSession()">
+            <option value="am">AM Core + Movement</option>
+            <option value="pm">PM Beast Session</option>
+          </select>
+        </div>
+
+        <div class="training-layout">
+          <div class="card">
+            <div id="workoutTitle"></div>
+            <div id="exercisePanel"></div>
+            <div class="trainer-controls">
+              <button onclick="prevExercise()">Previous</button>
+              <button onclick="completeSet()">Complete Set</button>
+              <button onclick="nextExercise()">Next</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Live Controls</h3>
+            <div class="live-grid">
+              <div><span>Exercise</span><strong id="exerciseIndex">1/1</strong></div>
+              <div><span>Sets Done</span><strong id="setsDone">0</strong></div>
+              <div><span>Rest</span><strong id="timer">02:00</strong></div>
+            </div>
+            <div class="trainer-controls">
+              <button onclick="startRest()">Start Rest</button>
+              <button onclick="resetRest()">Reset</button>
+            </div>
+            <div class="form-grid">
+              <input id="loadInput" placeholder="Load"/>
+              <input id="repsInput" placeholder="Reps"/>
+              <input id="rpeInput" placeholder="RPE"/>
+              <input id="formInput" placeholder="Form 1-5"/>
+              <input id="notesInput" placeholder="Notes"/>
+              <button onclick="saveWorkoutLog()">Save Log</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="academy" class="tab">
+        <div class="top-line">
+          <div>
+            <p class="eyebrow">ROOKIE PATH</p>
+            <h2>Pull-up Academy</h2>
+          </div>
+          <button onclick="advancePullup()">Advance Level</button>
+        </div>
+        <div id="pullupCards" class="academy-grid"></div>
+      </section>
+
+      <section id="nutrition" class="tab">
+        <div class="top-line">
+          <div>
+            <p class="eyebrow">NUTRITION OS</p>
+            <h2>Meals, Macros, Grocery</h2>
+          </div>
+          <button onclick="clearMeals()">Clear Meals</button>
+        </div>
+
+        <div class="dashboard-grid two">
+          <div class="card">
+            <h3>Meal Log</h3>
+            <div class="form-grid">
+              <input id="mealName" placeholder="Meal"/>
+              <input id="proteinInput" placeholder="Protein"/>
+              <input id="carbInput" placeholder="Carbs"/>
+              <input id="fatInput" placeholder="Fat"/>
+              <button onclick="addMeal()">Add Meal</button>
+            </div>
+            <div id="macroBars"></div>
+            <ul id="mealList"></ul>
+          </div>
+
+          <div class="card">
+            <h3>Weekly Grocery List</h3>
+            <div id="groceryList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="analytics" class="tab">
+        <div class="top-line">
+          <div>
+            <p class="eyebrow">SPRINT 4</p>
+            <h2>Athlete Analytics</h2>
+          </div>
+          <button onclick="exportAllData()">Export Data</button>
+        </div>
+
+        <div class="dashboard-grid two">
+          <div class="card">
+            <h3>Weight Trend</h3>
+            <canvas id="weightChart" width="560" height="280"></canvas>
+            <div class="form-grid">
+              <input id="weightInput" placeholder="New weight"/>
+              <button onclick="addWeight()">Add Weight</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Strength Trend</h3>
+            <canvas id="strengthChart" width="560" height="280"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Workout History</h3>
+          <ul id="historyList"></ul>
+        </div>
+      </section>
+
+      <section id="settings" class="tab">
+        <div class="card">
+          <p class="eyebrow">HP → GitHub Pages → iPhone</p>
+          <h2>Deployment Steps</h2>
+          <ol>
+            <li>Unzip this Sprint 2.0 folder on your HP.</li>
+            <li>Open your GitHub repository.</li>
+            <li>Upload and replace: <b>index.html</b>, <b>style.css</b>, <b>app.js</b>, <b>manifest.webmanifest</b>, <b>sw.js</b>, <b>icon.svg</b>.</li>
+            <li>Commit changes.</li>
+            <li>Wait 1–3 minutes.</li>
+            <li>Refresh your GitHub Pages URL.</li>
+            <li>On iPhone Safari, open the URL and tap Share → Add to Home Screen.</li>
+          </ol>
+        </div>
+      </section>
+    </main>
   </div>
-  <button onclick="exportData()">Export Data</button>
-</header>
-
-<main>
-  <section class="hero">
-    <div>
-      <h2>Today's Mission</h2>
-      <p>AM builds the athlete. PM builds the beast.</p>
-    </div>
-    <div class="score">
-      <span>Hybrid Score</span>
-      <strong id="hybridScore">74</strong>
-    </div>
-  </section>
-
-  <nav class="tabs">
-    <button class="active" onclick="showTab('engine')">Sprint 3</button>
-    <button onclick="showTab('analytics')">Sprint 4</button>
-    <button onclick="showTab('history')">History</button>
-  </nav>
-
-  <section id="engine" class="tab active">
-    <div class="card">
-      <div class="head">
-        <h2>Training Engine</h2>
-        <select id="sessionSelect" onchange="loadWorkout()">
-          <option value="am">AM Core + Movement</option>
-          <option value="pm">PM Beast Session</option>
-        </select>
-      </div>
-
-      <div id="workoutHeader"></div>
-      <div id="exerciseBox"></div>
-
-      <div class="controls">
-        <button onclick="prevExercise()">Previous</button>
-        <button onclick="completeSet()">Complete Set</button>
-        <button onclick="nextExercise()">Next</button>
-      </div>
-
-      <div class="tracker">
-        <div><span>Exercise</span><strong id="exerciseProgress">1/1</strong></div>
-        <div><span>Sets Done</span><strong id="setsDone">0</strong></div>
-        <div><span>Rest Timer</span><strong id="timer">02:00</strong></div>
-      </div>
-
-      <div class="controls">
-        <button onclick="startRest()">Start Rest</button>
-        <button onclick="resetRest()">Reset Rest</button>
-      </div>
-
-      <div class="form">
-        <input id="load" placeholder="Load"/>
-        <input id="reps" placeholder="Reps"/>
-        <input id="rpe" placeholder="RPE"/>
-        <input id="formScore" placeholder="Form 1-5"/>
-        <input id="notes" placeholder="Notes"/>
-        <button onclick="saveExerciseLog()">Save Log</button>
-      </div>
-    </div>
-  </section>
-
-  <section id="analytics" class="tab">
-    <div class="grid">
-      <div class="card">
-        <h2>Weight Trend</h2>
-        <canvas id="weightChart" width="520" height="260"></canvas>
-        <div class="form">
-          <input id="weightInput" placeholder="Weight"/>
-          <button onclick="addWeight()">Add Weight</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Strength Trend</h2>
-        <canvas id="strengthChart" width="520" height="260"></canvas>
-      </div>
-
-      <div class="card">
-        <h2>Pull-up Academy Progress</h2>
-        <div id="pullupProgress"></div>
-        <button onclick="advancePullup()">Advance Pull-up Level</button>
-      </div>
-
-      <div class="card">
-        <h2>Weekly Readiness</h2>
-        <div class="readiness">
-          <label>Sleep <input id="sleep" type="range" min="1" max="5" value="3" oninput="calcReadiness()"></label>
-          <label>Energy <input id="energy" type="range" min="1" max="5" value="3" oninput="calcReadiness()"></label>
-          <label>Soreness <input id="soreness" type="range" min="1" max="5" value="3" oninput="calcReadiness()"></label>
-          <label>Stress <input id="stress" type="range" min="1" max="5" value="3" oninput="calcReadiness()"></label>
-        </div>
-        <div class="bigscore" id="readinessScore">60%</div>
-        <p id="coachRecommendation">Yellow light — keep quality high.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="history" class="tab">
-    <div class="card">
-      <h2>Workout History</h2>
-      <ul id="historyList"></ul>
-    </div>
-  </section>
-</main>
-
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
